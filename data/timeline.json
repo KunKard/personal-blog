@@ -1,0 +1,84 @@
+[
+  {
+    "id": "seed-timeline-1",
+    "date": "2026-05-01",
+    "title": "个人品牌网站上线",
+    "description": "使用 Next.js 16 构建的个人开发者品牌网站正式上线，包含博客系统和作品展示。",
+    "category": "milestone",
+    "icon": "🚀",
+    "related_project_id": null,
+    "links": [],
+    "sort_order": 10,
+    "created_at": "2026-05-01T00:00:00.000Z",
+    "updated_at": "2026-05-01T00:00:00.000Z"
+  },
+  {
+    "id": "seed-timeline-2",
+    "date": "2026-03-01",
+    "title": "像素平台跳跃 - 原型完成",
+    "description": "完成游戏的核心玩法原型，包含基础移动、跳跃、收集和敌人 AI。",
+    "category": "project",
+    "icon": "🎮",
+    "related_project_id": "seed-project-1",
+    "links": [],
+    "sort_order": 9,
+    "created_at": "2026-03-01T00:00:00.000Z",
+    "updated_at": "2026-03-01T00:00:00.000Z"
+  },
+  {
+    "id": "seed-timeline-3",
+    "date": "2026-01-15",
+    "title": "开始像素平台跳跃项目",
+    "description": "正式开始开发第一款独立游戏，使用 Unity 6 + URP。确定了核心美术风格为像素风。",
+    "category": "project",
+    "icon": "🎯",
+    "related_project_id": "seed-project-1",
+    "links": [],
+    "sort_order": 8,
+    "created_at": "2026-01-15T00:00:00.000Z",
+    "updated_at": "2026-01-15T00:00:00.000Z"
+  },
+  {
+    "id": "seed-timeline-4",
+    "date": "2025-11-22",
+    "title": "Game Jam 2025 完赛",
+    "description": "48小时 Game Jam，使用 Unity 制作了太空探索主题的游戏《星空旅人》，获得最佳创意提名。",
+    "category": "jam",
+    "icon": "🏆",
+    "related_project_id": "seed-project-2",
+    "links": [
+      { "label": "itch.io", "url": "https://itch.io" }
+    ],
+    "sort_order": 7,
+    "created_at": "2025-11-22T00:00:00.000Z",
+    "updated_at": "2025-11-22T00:00:00.000Z"
+  },
+  {
+    "id": "seed-timeline-5",
+    "date": "2025-09-01",
+    "title": "学习 Unity Shader 编程",
+    "description": "开始系统学习 Unity Shader 编程和渲染管线，为后续项目的美术效果打下基础。",
+    "category": "learning",
+    "icon": "📚",
+    "related_project_id": null,
+    "links": [],
+    "sort_order": 6,
+    "created_at": "2025-09-01T00:00:00.000Z",
+    "updated_at": "2025-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "seed-timeline-6",
+    "date": "2025-06-01",
+    "title": "Unity 开发工具包开源",
+    "description": "将积累的 Unity Editor 工具整理成开源包发布到 GitHub，包括关卡编辑器和对话系统。",
+    "category": "project",
+    "icon": "🛠️",
+    "related_project_id": "seed-project-3",
+    "links": [
+      { "label": "GitHub", "url": "https://github.com" }
+    ],
+    "sort_order": 5,
+    "created_at": "2025-06-10T00:00:00.000Z",
+    "updated_at": "2025-06-10T00:00:00.000Z"
+  }
+]

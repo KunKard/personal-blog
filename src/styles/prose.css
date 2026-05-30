@@ -1,0 +1,38 @@
+/* Blog prose styling */
+.prose {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-links: var(--secondary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--muted);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--primary);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-code: var(--accent);
+  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-pre-bg: rgba(255, 255, 255, 0.05);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+  max-width: 65ch;
+  line-height: 1.8;
+}
+
+.prose h1 { font-size: 2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
+.prose h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.prose h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.prose p { margin-bottom: 1.25rem; }
+.prose a { color: var(--secondary); text-decoration: underline; text-underline-offset: 2px; }
+.prose a:hover { color: var(--primary); }
+.prose code { font-size: 0.875em; background: var(--surface); padding: 0.2em 0.4em; border-radius: 4px; }
+.prose pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem; }
+.prose pre code { background: none; padding: 0; }
+.prose blockquote { border-left: 3px solid var(--primary); padding-left: 1rem; font-style: italic; color: var(--muted); margin-bottom: 1.25rem; }
+.prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.prose li { margin-bottom: 0.25rem; }
+.prose img { border-radius: 8px; margin: 1.5rem auto; }
+.prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.prose th { padding: 0.5rem 1rem; border: 1px solid var(--border); background: var(--surface); }
+.prose td { padding: 0.5rem 1rem; border: 1px solid var(--border); }
