@@ -5,27 +5,22 @@ import { SectionHeading } from "@/components/home/section-heading";
 import { ProjectCard } from "@/components/projects/project-card";
 import { PostCard } from "@/components/blog/post-card";
 import { getFeaturedProjects } from "@/lib/db/projects";
-import { posts } from "#site/content";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { getPublishedPosts } from "@/lib/db/posts";
 
 export default async function HomePage() {
   let featuredProjects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
+  let latestPosts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
 
   try {
-    featuredProjects = await getFeaturedProjects();
+    [featuredProjects, latestPosts] = await Promise.all([
+      getFeaturedProjects(),
+      getPublishedPosts(),
+    ]);
   } catch {
     // Data not available yet
   }
 
-  const latestPosts = posts
-    .filter((p) => !p.draft)
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt ?? 0).getTime() -
-        new Date(a.publishedAt ?? 0).getTime()
-    )
-    .slice(0, 3);
+  const recentPosts = latestPosts.slice(0, 3);
 
   return (
     <>
@@ -54,13 +49,7 @@ export default async function HomePage() {
               </p>
             </div>
           )}
-          {featuredProjects.length > 0 && (
-            <div className="text-center mt-8">
-              <Link href="/projects">
-                <Button variant="outline">查看全部作品</Button>
-              </Link>
-            </div>
-          )}
+          {/* "查看全部" 按钮暂时隐藏 */}
         </Container>
       </section>
 
@@ -71,19 +60,20 @@ export default async function HomePage() {
             title="最新博客"
             subtitle="分享游戏开发中的思考与经验"
           />
-          {latestPosts.length > 0 ? (
+          {recentPosts.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {latestPosts.map((post) => (
+              {recentPosts.map((post) => (
                 <PostCard
                   key={post.slug}
                   post={{
                     slug: post.slug,
                     title: post.title,
-                    excerpt: post.excerpt ?? null,
+                    excerpt: post.excerpt,
                     category: post.category,
                     tags: post.tags,
-                    publishedAt: post.publishedAt ?? null,
-                    readingTime: post.readingTime ?? null,
+                    publishedAt: post.published_at,
+                    readingTime: post.reading_time,
+                    coverImage: post.cover_image_url,
                   }}
                 />
               ))}
@@ -97,13 +87,7 @@ export default async function HomePage() {
               </p>
             </div>
           )}
-          {latestPosts.length > 0 && (
-            <div className="text-center mt-8">
-              <Link href="/blog">
-                <Button variant="outline">阅读更多文章</Button>
-              </Link>
-            </div>
-          )}
+          {/* "阅读更多" 按钮暂时隐藏 */}
         </Container>
       </section>
 

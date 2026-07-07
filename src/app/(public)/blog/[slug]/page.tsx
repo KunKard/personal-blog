@@ -1,25 +1,32 @@
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
-import { MDXRenderer } from "@/components/blog/mdx-renderer";
+import { MarkdownContent } from "@/components/blog/markdown-content";
+import { getPostBySlug, getPublishedPosts } from "@/lib/db/posts";
 import { generateSiteMetadata } from "@/lib/utils/metadata";
 import { formatDate } from "@/lib/utils/formatters";
-import { posts } from "#site/content";
 import type { Metadata } from "next";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return posts
-    .filter((p) => !p.draft)
-    .map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  try {
+    const posts = await getPublishedPosts();
+    if (posts.length === 0) return [{ slug: "placeholder" }];
+    return posts.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [{ slug: "placeholder" }];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = posts.find((p) => p.slug === slug && !p.draft);
+  let post;
+  try {
+    post = await getPostBySlug(slug);
+  } catch { /* ignore */ }
 
   if (!post) {
     return generateSiteMetadata({ title: "文章未找到" });
@@ -28,15 +35,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return generateSiteMetadata({
     title: post.title,
     description: post.excerpt || post.title,
+    image: post.cover_image_url || undefined,
     type: "article",
-    publishedAt: post.publishedAt || undefined,
+    publishedAt: post.published_at || undefined,
+    updatedAt: post.updated_at,
     tags: post.tags,
   });
 }
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = posts.find((p) => p.slug === slug && !p.draft);
+  let post;
+  try {
+    post = await getPostBySlug(slug);
+  } catch {
+    post = null;
+  }
 
   if (!post) notFound();
 
@@ -44,15 +58,23 @@ export default async function BlogPostPage({ params }: Props) {
     <div className="pt-24 pb-16">
       <Container>
         <article className="max-w-3xl mx-auto">
-          {/* Header */}
           <header className="mb-8">
+            {post.cover_image_url && (
+              <div className="aspect-video bg-surface rounded-lg border border-border overflow-hidden mb-6">
+                <img
+                  src={post.cover_image_url}
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
             <div className="flex flex-wrap items-center gap-3 text-sm text-muted mb-4">
               {post.category && <Badge variant="primary">{post.category}</Badge>}
-              {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
-              {post.readingTime && (
+              {post.published_at && <span>{formatDate(post.published_at)}</span>}
+              {post.reading_time && (
                 <>
                   <span>·</span>
-                  <span>{post.readingTime} min read</span>
+                  <span>{post.reading_time} min read</span>
                 </>
               )}
             </div>
@@ -69,9 +91,9 @@ export default async function BlogPostPage({ params }: Props) {
             )}
           </header>
 
-          {/* Content */}
+          {/* Rendered Markdown Content */}
           <div className="prose max-w-none">
-            <MDXRenderer code={post.code} />
+            <MarkdownContent content={post.content} />
           </div>
         </article>
       </Container>

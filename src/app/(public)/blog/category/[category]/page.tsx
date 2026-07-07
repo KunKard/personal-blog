@@ -1,17 +1,23 @@
 import { Container } from "@/components/layout/container";
 import { SectionHeading } from "@/components/home/section-heading";
 import { PostCard } from "@/components/blog/post-card";
+import { getPostsByCategory, getPublishedPosts } from "@/lib/db/posts";
 import { generateSiteMetadata } from "@/lib/utils/metadata";
-import { posts } from "#site/content";
 import type { Metadata } from "next";
 
 interface Props {
   params: Promise<{ category: string }>;
 }
 
-export function generateStaticParams() {
-  const categories = [...new Set(posts.filter((p) => !p.draft).map((p) => p.category))];
-  return categories.map((category) => ({ category }));
+export async function generateStaticParams() {
+  try {
+    const posts = await getPublishedPosts();
+    const categories = [...new Set(posts.map((p) => p.category))];
+    if (categories.length === 0) return [{ category: "placeholder" }];
+    return categories.map((category) => ({ category }));
+  } catch {
+    return [{ category: "placeholder" }];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -24,32 +30,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogCategoryPage({ params }: Props) {
   const { category } = await params;
-  const categoryPosts = posts
-    .filter((p) => !p.draft && p.category === category)
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt ?? 0).getTime() -
-        new Date(a.publishedAt ?? 0).getTime()
-    );
+  let posts: Awaited<ReturnType<typeof getPostsByCategory>> = [];
+
+  try {
+    posts = await getPostsByCategory(category);
+  } catch {
+    // Data not available
+  }
 
   return (
     <div className="pt-24 pb-16">
       <Container>
-        <SectionHeading title={`分类: ${category}`} subtitle={`共 ${categoryPosts.length} 篇文章`} />
+        <SectionHeading title={`分类: ${category}`} subtitle={`共 ${posts.length} 篇文章`} />
 
-        {categoryPosts.length > 0 ? (
+        {posts.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categoryPosts.map((post) => (
+            {posts.map((post) => (
               <PostCard
                 key={post.slug}
                 post={{
                   slug: post.slug,
                   title: post.title,
-                  excerpt: post.excerpt ?? null,
+                  excerpt: post.excerpt,
                   category: post.category,
                   tags: post.tags,
-                  publishedAt: post.publishedAt ?? null,
-                  readingTime: post.readingTime ?? null,
+                  publishedAt: post.published_at,
+                  readingTime: post.reading_time,
                 }}
               />
             ))}

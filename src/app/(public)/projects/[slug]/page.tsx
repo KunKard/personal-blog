@@ -13,9 +13,10 @@ interface Props {
 export async function generateStaticParams() {
   try {
     const projects = await getProjects();
+    if (projects.length === 0) return [{ slug: "placeholder" }];
     return projects.map((p) => ({ slug: p.slug }));
   } catch {
-    return [];
+    return [{ slug: "placeholder" }];
   }
 }
 

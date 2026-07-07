@@ -1,17 +1,23 @@
 import { Container } from "@/components/layout/container";
 import { SectionHeading } from "@/components/home/section-heading";
 import { PostCard } from "@/components/blog/post-card";
+import { getPublishedPosts } from "@/lib/db/posts";
 import { generateSiteMetadata } from "@/lib/utils/metadata";
-import { posts } from "#site/content";
 import type { Metadata } from "next";
 
 interface Props {
   params: Promise<{ tag: string }>;
 }
 
-export function generateStaticParams() {
-  const allTags = [...new Set(posts.filter((p) => !p.draft).flatMap((p) => p.tags))];
-  return allTags.map((tag) => ({ tag }));
+export async function generateStaticParams() {
+  try {
+    const posts = await getPublishedPosts();
+    const allTags = [...new Set(posts.flatMap((p) => p.tags))];
+    if (allTags.length === 0) return [{ tag: "placeholder" }];
+    return allTags.map((tag) => ({ tag }));
+  } catch {
+    return [{ tag: "placeholder" }];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -24,13 +30,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogTagPage({ params }: Props) {
   const { tag } = await params;
-  const tagPosts = posts
-    .filter((p) => !p.draft && p.tags.includes(tag))
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt ?? 0).getTime() -
-        new Date(a.publishedAt ?? 0).getTime()
-    );
+
+  let allPosts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
+  try {
+    allPosts = await getPublishedPosts();
+  } catch {
+    // Data not available
+  }
+
+  const tagPosts = allPosts.filter((p) => p.tags.includes(tag));
 
   return (
     <div className="pt-24 pb-16">
@@ -45,11 +53,11 @@ export default async function BlogTagPage({ params }: Props) {
                 post={{
                   slug: post.slug,
                   title: post.title,
-                  excerpt: post.excerpt ?? null,
+                  excerpt: post.excerpt,
                   category: post.category,
                   tags: post.tags,
-                  publishedAt: post.publishedAt ?? null,
-                  readingTime: post.readingTime ?? null,
+                  publishedAt: post.published_at,
+                  readingTime: post.reading_time,
                 }}
               />
             ))}
