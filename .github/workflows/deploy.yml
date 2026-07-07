@@ -27,7 +27,12 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
+
+      - name: Verify key packages
+        run: |
+          ls node_modules/react-markdown/package.json && echo "react-markdown OK"
+          ls node_modules/remark-gfm/package.json && echo "remark-gfm OK"
 
       - name: Setup Pages
         id: pages
