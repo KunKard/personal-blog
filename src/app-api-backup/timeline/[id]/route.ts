@@ -3,12 +3,6 @@ import { auth } from "@/lib/auth/auth";
 import { updateTimelineEntry, deleteTimelineEntry } from "@/lib/db/timeline";
 import type { TimelineEntryUpdate } from "@/lib/types";
 
-export const dynamic = "force-static";
-
-export function generateStaticParams() {
-  return [];
-}
-
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
   if (!session?.user) {

@@ -2,8 +2,8 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { authConfig } from "./auth.config";
 
-const DEV_EMAIL = "admin@kworld.com";
-const DEV_PASSWORD = "admin123";
+const DEV_EMAIL = "kunkard@foxmail.com";
+const DEV_PASSWORD = "Kard206026";
 
 function isSupabaseConfigured() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

@@ -3,8 +3,6 @@ import { auth } from "@/lib/auth/auth";
 import { getAdminProjects, createProject } from "@/lib/db/projects";
 import type { ProjectInsert } from "@/lib/types";
 
-export const dynamic = "force-static";
-
 export async function GET() {
   const projects = await getAdminProjects();
   return NextResponse.json(projects);

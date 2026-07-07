@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { localStore } from "@/lib/storage/local";
 
-export const dynamic = "force-static";
-
 function isSupabaseConfigured() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   return url && !url.includes("your-supabase-url");

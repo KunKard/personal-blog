@@ -3,12 +3,6 @@ import { auth } from "@/lib/auth/auth";
 import { getAdminPost, updatePost, deletePost } from "@/lib/db/posts";
 import type { PostUpdate } from "@/lib/types";
 
-export const dynamic = "force-static";
-
-export function generateStaticParams() {
-  return [];
-}
-
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const post = await getAdminPost(id);

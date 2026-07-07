@@ -1,18 +1,5 @@
 [
   {
-    "id": "seed-timeline-1",
-    "date": "2026-05-01",
-    "title": "个人品牌网站上线",
-    "description": "使用 Next.js 16 构建的个人开发者品牌网站正式上线，包含博客系统和作品展示。",
-    "category": "milestone",
-    "icon": "🚀",
-    "related_project_id": null,
-    "links": [],
-    "sort_order": 10,
-    "created_at": "2026-05-01T00:00:00.000Z",
-    "updated_at": "2026-05-01T00:00:00.000Z"
-  },
-  {
     "id": "seed-timeline-2",
     "date": "2026-03-01",
     "title": "像素平台跳跃 - 原型完成",
@@ -47,7 +34,10 @@
     "icon": "🏆",
     "related_project_id": "seed-project-2",
     "links": [
-      { "label": "itch.io", "url": "https://itch.io" }
+      {
+        "label": "itch.io",
+        "url": "https://itch.io"
+      }
     ],
     "sort_order": 7,
     "created_at": "2025-11-22T00:00:00.000Z",
@@ -75,7 +65,10 @@
     "icon": "🛠️",
     "related_project_id": "seed-project-3",
     "links": [
-      { "label": "GitHub", "url": "https://github.com" }
+      {
+        "label": "GitHub",
+        "url": "https://github.com"
+      }
     ],
     "sort_order": 5,
     "created_at": "2025-06-10T00:00:00.000Z",

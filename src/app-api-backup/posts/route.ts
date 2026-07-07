@@ -3,8 +3,6 @@ import { auth } from "@/lib/auth/auth";
 import { getAdminPosts, createPost } from "@/lib/db/posts";
 import type { PostInsert } from "@/lib/types";
 
-export const dynamic = "force-static";
-
 export async function GET() {
   const posts = await getAdminPosts();
   return NextResponse.json(posts);

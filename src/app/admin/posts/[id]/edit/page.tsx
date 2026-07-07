@@ -2,11 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BLOG_CATEGORIES } from "@/lib/utils/constants";
-import { slugify } from "@/lib/utils/formatters";
 import type { Post, PostUpdate } from "@/lib/types";
+
+import "@uiw/react-md-editor/markdown-editor.css";
+
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 export default function EditPostPage() {
   const router = useRouter();
@@ -63,7 +67,7 @@ export default function EditPostPage() {
   const post = form as Post;
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-5xl">
       <h1 className="text-2xl font-bold mb-8">编辑文章</h1>
 
       <form className="space-y-6">
@@ -73,7 +77,7 @@ export default function EditPostPage() {
             type="text"
             value={post.title || ""}
             onChange={(e) => updateField("title", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-primary"
+            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors"
           />
         </div>
 
@@ -83,7 +87,7 @@ export default function EditPostPage() {
             value={post.excerpt || ""}
             onChange={(e) => updateField("excerpt", e.target.value)}
             rows={2}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-primary resize-none"
+            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors resize-none"
           />
         </div>
 
@@ -92,7 +96,7 @@ export default function EditPostPage() {
           <select
             value={post.category}
             onChange={(e) => updateField("category", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-primary"
+            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors"
           >
             {BLOG_CATEGORIES.filter((c) => c.value !== "all").map((c) => (
               <option key={c.value} value={c.value}>{c.label}</option>
@@ -115,21 +119,26 @@ export default function EditPostPage() {
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-              className="flex-1 px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-primary"
+              className="flex-1 px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors"
               placeholder="输入标签后按回车"
             />
             <Button type="button" variant="outline" size="sm" onClick={addTag}>添加</Button>
           </div>
         </div>
 
+        {/* Markdown Rich Editor */}
         <div>
-          <label className="block text-sm text-muted mb-1">内容 (Markdown)</label>
-          <textarea
-            value={post.content || ""}
-            onChange={(e) => updateField("content", e.target.value)}
-            rows={16}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-primary font-mono resize-y"
-          />
+          <label className="block text-sm text-muted mb-2">内容</label>
+          <div data-color-mode="light">
+            <MDEditor
+              value={post.content || ""}
+              onChange={(val) => updateField("content", val || "")}
+              height={500}
+              preview="live"
+              visibleDragbar={true}
+              hideToolbar={false}
+            />
+          </div>
         </div>
 
         <div className="flex gap-3 pt-4">

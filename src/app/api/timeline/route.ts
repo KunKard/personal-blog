@@ -3,8 +3,6 @@ import { auth } from "@/lib/auth/auth";
 import { getAdminTimeline, createTimelineEntry } from "@/lib/db/timeline";
 import type { TimelineEntryInsert } from "@/lib/types";
 
-export const dynamic = "force-static";
-
 export async function GET() {
   const entries = await getAdminTimeline();
   return NextResponse.json(entries);

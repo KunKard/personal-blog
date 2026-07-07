@@ -44,7 +44,6 @@ export const TIMELINE_CATEGORIES = [
 export const TECH_STACK = [
   "Unity",
   "C#",
-  "Blender",
   "Aseprite",
   "Photoshop",
   "FMOD",
