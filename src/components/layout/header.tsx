@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils/cn";
 import { MobileNav } from "./mobile-nav";
 
 export function Header() {
-  const pathname = usePathname();
+  const pathname = usePathname().replace(/\/$/, "") || "/";
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
