@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/global/providers";
-import { PathGuard } from "@/components/global/path-guard";
 import { CursorParticles } from "@/components/effects/cursor-particles";
 import { SITE_CONFIG } from "@/lib/utils/constants";
 import "@/styles/globals.css";
@@ -40,10 +39,8 @@ export default function RootLayout({
       lang="zh-CN"
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground overflow-hidden">
-        <Providers>
-          <PathGuard>{children}</PathGuard>
-        </Providers>
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        <Providers>{children}</Providers>
         <CursorParticles />
       </body>
     </html>

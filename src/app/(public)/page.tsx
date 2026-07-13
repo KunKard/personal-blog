@@ -6,6 +6,8 @@ import { ProjectCard } from "@/components/projects/project-card";
 import { PostCard } from "@/components/blog/post-card";
 import { getFeaturedProjects } from "@/lib/db/projects";
 import { getPublishedPosts } from "@/lib/db/posts";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function HomePage() {
   let featuredProjects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
@@ -49,7 +51,13 @@ export default async function HomePage() {
               </p>
             </div>
           )}
-          {/* "查看全部" 按钮暂时隐藏 */}
+          {featuredProjects.length > 0 && (
+            <div className="text-center mt-8">
+              <Link href="/projects">
+                <Button variant="outline">查看全部作品</Button>
+              </Link>
+            </div>
+          )}
         </Container>
       </section>
 
@@ -87,7 +95,13 @@ export default async function HomePage() {
               </p>
             </div>
           )}
-          {/* "阅读更多" 按钮暂时隐藏 */}
+          {recentPosts.length > 0 && (
+            <div className="text-center mt-8">
+              <Link href="/blog">
+                <Button variant="outline">阅读更多文章</Button>
+              </Link>
+            </div>
+          )}
         </Container>
       </section>
 

@@ -69,7 +69,21 @@ export function HeroSection() {
         <HomeMenu />
       </motion.div>
 
-      {/* Scroll indicator removed — single-screen mode */}
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="w-6 h-10 border-2 border-muted rounded-full flex items-start justify-center p-1"
+        >
+          <div className="w-1.5 h-1.5 bg-muted rounded-full" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
