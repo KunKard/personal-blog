@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold mb-2 tracking-tight">
-            KWorld Admin
+            Kworld Admin
           </h1>
           <p className="text-sm text-muted">请登录以管理网站内容</p>
         </div>

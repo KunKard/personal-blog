@@ -22,9 +22,7 @@ export function generateSiteMetadata({
   tags,
   noIndex = false,
 }: SEOProps = {}): Metadata {
-  const finalTitle = title
-    ? `${title} | ${SITE_CONFIG.title}`
-    : `${SITE_CONFIG.title} - ${SITE_CONFIG.name}`;
+  const finalTitle = "Kworld";
   const finalDescription = description || SITE_CONFIG.description;
   const finalImage = image || `${SITE_CONFIG.url}/og-image.png`;
 

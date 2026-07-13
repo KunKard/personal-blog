@@ -21,7 +21,7 @@ export function AdminSidebar() {
     <aside className="w-64 min-h-screen bg-surface border-r border-border flex flex-col">
       <div className="h-16 flex items-center px-6 border-b border-border">
         <Link href="/admin" className="text-lg font-bold text-foreground tracking-tight">
-          KWorld
+          Kworld
         </Link>
       </div>
 

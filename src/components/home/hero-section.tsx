@@ -30,7 +30,7 @@ export function HeroSection() {
         transition={{ delay: 0.2, duration: 0.6 }}
         className="text-4xl sm:text-6xl font-bold mb-4 tracking-tight"
       >
-        <TypewriterText text="KWorld" delay={60} />
+        <TypewriterText text="Kworld" delay={60} />
       </motion.h1>
 
       {/* Tagline */}
@@ -40,8 +40,7 @@ export function HeroSection() {
         transition={{ delay: 0.6, duration: 0.6 }}
         className="text-lg sm:text-xl text-muted max-w-lg mb-8"
       >
-        探索代码与创造力的交汇点<br />
-        用 Unity 构建独立游戏世界
+        Code. Create. Play.
       </motion.p>
 
       {/* Tag badges */}
@@ -51,7 +50,7 @@ export function HeroSection() {
         transition={{ delay: 0.9, duration: 0.6 }}
         className="flex flex-wrap gap-2 justify-center mb-12"
       >
-        {["Unity", "C#", "Game Design"].map((tag, i) => (
+        {["Unity", "UE", "C++", "C#", "GameDesign"].map((tag, i) => (
           <span
             key={tag}
             className="px-3 py-1 text-xs rounded-full border border-border bg-surface text-muted"

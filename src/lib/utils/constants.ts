@@ -1,5 +1,5 @@
 export const SITE_CONFIG = {
-  name: "KWorld",
+  name: "Kworld",
   title: "独立游戏开发者",
   description: "Building indie games with Unity. Exploring the intersection of code and creativity.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com",
