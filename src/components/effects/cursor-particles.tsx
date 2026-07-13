@@ -38,8 +38,8 @@ export function CursorParticles() {
         vx: Math.cos(angle) * vel,
         vy: Math.sin(angle) * vel,
         life: 1.0,
-        maxLife: 0.3 + Math.random() * 0.5,
-        size: 1 + Math.random() * 2,
+        maxLife: 0.35 + Math.random() * 0.6,
+        size: 1.3 + Math.random() * 2.2,
         hue,
       };
     },
@@ -97,8 +97,8 @@ export function CursorParticles() {
       const dist = Math.sqrt(dx * dx + dy * dy);
 
       if (dist > 0.5 && dt > 0) {
-        // Emit trail particles along the path (subtle: fewer particles)
-        const count = Math.min(Math.floor(dist / 8), 2);
+        // Emit trail particles along the path
+        const count = Math.min(Math.floor(dist / 4), 3);
         for (let i = 0; i < count; i++) {
           const t = i / Math.max(count, 1);
           const px = m.prevX + dx * t;
@@ -108,17 +108,17 @@ export function CursorParticles() {
       }
 
       // Cap particles
-      while (particlesRef.current.length > 80) {
+      while (particlesRef.current.length > 150) {
         particlesRef.current.shift();
       }
     }
 
     function onClick(e: MouseEvent) {
-      const count = 6 + Math.floor(Math.random() * 4);
+      const count = 12 + Math.floor(Math.random() * 6);
       for (let i = 0; i < count; i++) {
         particlesRef.current.push(spawnBurstParticle(e.clientX, e.clientY));
       }
-      while (particlesRef.current.length > 100) {
+      while (particlesRef.current.length > 200) {
         particlesRef.current.shift();
       }
     }
@@ -151,17 +151,17 @@ export function CursorParticles() {
         p.vx *= 0.96;
         p.vy *= 0.96;
 
-        // Draw (subtle: reduced opacity & glow)
-        const alpha = p.life * 0.45;
+        // Draw
+        const alpha = p.life * 0.7;
         const currentSize = p.size * (0.3 + p.life * 0.7);
 
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
-        ctx!.fillStyle = `hsla(${p.hue}, 60%, 50%, ${alpha})`;
+        ctx!.fillStyle = `hsla(${p.hue}, 75%, 55%, ${alpha})`;
 
-        // Glow — barely visible
-        ctx!.shadowColor = `hsla(${p.hue}, 60%, 50%, ${alpha * 0.2})`;
-        ctx!.shadowBlur = currentSize * 2;
+        // Glow
+        ctx!.shadowColor = `hsla(${p.hue}, 75%, 55%, ${alpha * 0.3})`;
+        ctx!.shadowBlur = currentSize * 3;
         ctx!.fill();
         ctx!.shadowBlur = 0;
       }
