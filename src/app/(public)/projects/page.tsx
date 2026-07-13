@@ -21,7 +21,7 @@ export default async function ProjectsPage() {
   return (
     <div className="pt-24 pb-16">
       <Container>
-        <SectionHeading title="作品集" subtitle="每一个项目都是一次成长的旅程" />
+        <SectionHeading title="作品集" />
 
         {projects.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

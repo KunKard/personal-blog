@@ -9,7 +9,8 @@ interface Particle {
   vy: number;
   size: number;
   opacity: number;
-  hue: number;
+  color: string;
+  glow: string;
 }
 
 export function ParticleBackground() {
@@ -34,14 +35,34 @@ export function ParticleBackground() {
     window.addEventListener("resize", resize);
 
     function createParticle(): Particle {
+      const isBlue = Math.random() < 0.5;
+      let color: string, glow: string;
+
+      if (isBlue) {
+        // Deep blue tones
+        const hue = 200 + Math.random() * 40;
+        const sat = 40 + Math.random() * 30;
+        const lit = 35 + Math.random() * 25;
+        const alpha = Math.random() * 0.35 + 0.05;
+        color = `hsla(${hue}, ${sat}%, ${lit}%, ${alpha})`;
+        glow = `hsla(${hue}, ${sat}%, ${lit + 10}%, ${alpha * 0.6})`;
+      } else {
+        // Gray / white tones
+        const lit = 50 + Math.random() * 40;
+        const alpha = Math.random() * 0.25 + 0.03;
+        color = `hsla(0, 0%, ${lit}%, ${alpha})`;
+        glow = `hsla(0, 0%, ${lit + 10}%, ${alpha * 0.4})`;
+      }
+
       return {
         x: Math.random() * canvas!.width,
         y: canvas!.height + 10,
         vx: (Math.random() - 0.5) * 0.5,
         vy: -(Math.random() * 0.8 + 0.4),
         size: Math.random() * 3 + 1,
-        opacity: Math.random() * 0.6 + 0.1,
-        hue: Math.random() < 0.3 ? 260 + Math.random() * 40 : 320 + Math.random() * 30,
+        opacity: 1,
+        color,
+        glow,
       };
     }
 
@@ -70,10 +91,10 @@ export function ParticleBackground() {
 
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx!.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
+        ctx!.fillStyle = p.color;
 
         // Add glow
-        ctx!.shadowColor = `hsla(${p.hue}, 70%, 60%, 0.5)`;
+        ctx!.shadowColor = p.glow;
         ctx!.shadowBlur = p.size * 4;
         ctx!.fill();
         ctx!.shadowBlur = 0;
@@ -95,7 +116,7 @@ export function ParticleBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
+      className="fixed inset-0 pointer-events-none z-[-1]"
       aria-hidden="true"
     />
   );

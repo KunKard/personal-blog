@@ -1,4 +1,3 @@
-import { ParticleBackground } from "@/components/home/particle-background";
 import { HeroSection } from "@/components/home/hero-section";
 import { Container } from "@/components/layout/container";
 import { SectionHeading } from "@/components/home/section-heading";
@@ -8,33 +7,36 @@ import { getFeaturedProjects } from "@/lib/db/projects";
 import { getPublishedPosts } from "@/lib/db/posts";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { getSiteSettings } from "@/lib/storage/site-settings";
 
 export default async function HomePage() {
   let featuredProjects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
   let latestPosts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
+  let siteSettings;
 
   try {
     [featuredProjects, latestPosts] = await Promise.all([
       getFeaturedProjects(),
       getPublishedPosts(),
     ]);
+    siteSettings = getSiteSettings();
   } catch {
     // Data not available yet
   }
 
   const recentPosts = latestPosts.slice(0, 3);
+  const currentProject = siteSettings?.current_project;
 
   return (
     <>
-      <ParticleBackground />
       <HeroSection />
 
       {/* Featured Projects */}
       <section className="py-24">
         <Container>
           <SectionHeading
-            title="精选作品"
-            subtitle="一些我引以为豪的游戏作品"
+            title="游戏作品"
+            subtitle="每一个作品都是一段旅程"
           />
           {featuredProjects.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -106,34 +108,36 @@ export default async function HomePage() {
       </section>
 
       {/* Current Project */}
-      <section className="py-24">
-        <Container>
-          <SectionHeading
-            title="正在开发"
-            subtitle="目前正在全力开发中的项目"
-          />
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="border-2 border-border rounded-lg p-8 bg-surface">
-              <div className="text-5xl mb-4">🔧</div>
-              <h3 className="text-xl font-bold mb-2 tracking-tight">
-                新项目开发中
-              </h3>
-              <p className="text-muted mb-4">
-                一个全新的独立游戏正在酝酿中...
-                <br />
-                敬请期待！
-              </p>
-              <div className="flex justify-center gap-2">
-                {["Unity 6", "URP", "2D"].map((tag) => (
-                  <span key={tag} className="px-2 py-0.5 text-xs rounded-full bg-surface-hover text-muted">
-                    {tag}
-                  </span>
-                ))}
+      {currentProject && (
+        <section className="py-24">
+          <Container>
+            <SectionHeading
+              title="正在开发"
+              subtitle="目前正在全力开发中的项目"
+            />
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="border-2 border-border rounded-lg p-8 bg-surface">
+                <div className="text-5xl mb-4">{currentProject.icon}</div>
+                <h3 className="text-xl font-bold mb-2 tracking-tight">
+                  {currentProject.title}
+                </h3>
+                <p className="text-muted mb-4 whitespace-pre-line">
+                  {currentProject.description}
+                </p>
+                {currentProject.tags.length > 0 && (
+                  <div className="flex justify-center gap-2">
+                    {currentProject.tags.map((tag) => (
+                      <span key={tag} className="px-2 py-0.5 text-xs rounded-full bg-surface-hover text-muted">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
     </>
   );
 }

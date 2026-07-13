@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
+import { ProjectLinks } from "@/components/projects/project-links";
 import { getProjectBySlug, getProjects } from "@/lib/db/projects";
 import { generateSiteMetadata } from "@/lib/utils/metadata";
 import { formatDate } from "@/lib/utils/formatters";
@@ -180,17 +181,9 @@ export default async function ProjectDetailPage({ params }: Props) {
                   GitHub 仓库
                 </a>
               )}
-              {project.download_links.map((link, i) => (
-                <a
-                  key={i}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center px-4 py-3 border border-border rounded-lg hover:bg-surface transition-colors text-sm"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {project.download_links.length > 0 && (
+                <ProjectLinks links={project.download_links} />
+              )}
             </div>
           </aside>
         </div>

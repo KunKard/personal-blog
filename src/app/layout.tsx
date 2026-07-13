@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/global/providers";
+import { ParticleBackground } from "@/components/home/particle-background";
 import { CursorParticles } from "@/components/effects/cursor-particles";
 import { SITE_CONFIG } from "@/lib/utils/constants";
 import "@/styles/globals.css";
@@ -40,6 +41,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <ParticleBackground />
         <Providers>{children}</Providers>
         <CursorParticles />
       </body>

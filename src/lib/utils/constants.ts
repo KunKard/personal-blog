@@ -12,7 +12,6 @@ export const NAV_ITEMS = [
   { label: "关于我", href: "/about", icon: "👤" },
   { label: "作品集", href: "/projects", icon: "🎮" },
   { label: "博客", href: "/blog", icon: "📝" },
-  { label: "时间轴", href: "/timeline", icon: "⏳" },
 ] as const;
 
 export const PROJECT_CATEGORIES = [
@@ -43,12 +42,8 @@ export const TIMELINE_CATEGORIES = [
 
 export const TECH_STACK = [
   "Unity",
+  "UE",
+  "C++",
   "C#",
-  "Aseprite",
-  "Photoshop",
-  "FMOD",
-  "Shader Graph",
-  "URP",
-  "Input System",
-  "Git",
+  "GameDesign",
 ] as const;

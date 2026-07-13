@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/utils/constants";
 
 export function Footer() {
@@ -8,9 +9,13 @@ export function Footer() {
           <p className="text-sm text-muted">
             &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
           </p>
-          <p className="text-xs text-muted">
+          <Link
+            href="/admin/login"
+            className="text-xs text-muted hover:text-foreground/40 transition-colors select-none"
+            title="管理后台"
+          >
             Built with Next.js &middot; Deployed on Vercel
-          </p>
+          </Link>
         </div>
       </div>
     </footer>
