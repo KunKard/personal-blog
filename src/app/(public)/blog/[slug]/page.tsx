@@ -65,6 +65,7 @@ export default async function BlogPostPage({ params }: Props) {
                 <img
                   src={assetPath(post.cover_image_url)}
                   alt={post.title}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               </div>

@@ -1,20 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/global/providers";
 import { ParticleBackground } from "@/components/home/particle-background";
 import { CursorParticles } from "@/components/effects/cursor-particles";
 import { SITE_CONFIG } from "@/lib/utils/constants";
 import "@/styles/globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
@@ -36,11 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="zh-CN"
-      className={`${geistSans.variable} ${geistMono.variable} h-full`}
-    >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+    <html lang="zh-CN" className="h-full">
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans antialiased">
         <ParticleBackground />
         <Providers>{children}</Providers>
         <CursorParticles />

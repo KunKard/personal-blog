@@ -61,6 +61,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               <img
                 src={assetPath(project.cover_image_url)}
                 alt={project.title}
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -105,7 +106,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                       key={i}
                       className="aspect-video bg-surface rounded border border-border flex items-center justify-center overflow-hidden"
                     >
-                      <img src={shot.url} alt={shot.caption || `Screenshot ${i + 1}`} className="w-full h-full object-cover" />
+                      <img src={shot.url} alt={shot.caption || `Screenshot ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
                     </div>
                   ))}
                 </div>
