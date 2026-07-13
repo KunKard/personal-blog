@@ -5,6 +5,7 @@ import { MarkdownContent } from "@/components/blog/markdown-content";
 import { getPostBySlug, getPublishedPosts } from "@/lib/db/posts";
 import { generateSiteMetadata } from "@/lib/utils/metadata";
 import { formatDate } from "@/lib/utils/formatters";
+import { assetPath } from "@/lib/utils/asset-path";
 import type { Metadata } from "next";
 
 interface Props {
@@ -62,7 +63,7 @@ export default async function BlogPostPage({ params }: Props) {
             {post.cover_image_url && (
               <div className="aspect-video bg-surface rounded-lg border border-border overflow-hidden mb-6">
                 <img
-                  src={post.cover_image_url}
+                  src={assetPath(post.cover_image_url)}
                   alt={post.title}
                   className="w-full h-full object-cover"
                 />

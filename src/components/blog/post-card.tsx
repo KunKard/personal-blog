@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils/formatters";
+import { assetPath } from "@/lib/utils/asset-path";
 
 interface PostCardProps {
   post: {
@@ -25,7 +26,7 @@ export function PostCard({ post }: PostCardProps) {
         {post.coverImage && (
           <div className="aspect-video overflow-hidden">
             <img
-              src={post.coverImage}
+              src={assetPath(post.coverImage)}
               alt={post.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />

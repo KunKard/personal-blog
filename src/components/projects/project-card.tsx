@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { assetPath } from "@/lib/utils/asset-path";
 import type { Project } from "@/lib/types";
 
 interface ProjectCardProps {
@@ -14,7 +15,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="aspect-video bg-surface flex items-center justify-center overflow-hidden">
           {project.cover_image_url ? (
             <img
-              src={project.cover_image_url}
+              src={assetPath(project.cover_image_url)}
               alt={project.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />

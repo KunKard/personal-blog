@@ -1,6 +1,7 @@
 import { Container } from "@/components/layout/container";
 import { TECH_STACK } from "@/lib/utils/constants";
 import { generateSiteMetadata } from "@/lib/utils/metadata";
+import { assetPath } from "@/lib/utils/asset-path";
 
 export const metadata = generateSiteMetadata({
   title: "关于我",
@@ -21,7 +22,7 @@ export default function AboutPage() {
           {/* Avatar */}
           <div className="w-24 h-24 mx-auto rounded-full border-2 border-border overflow-hidden mb-6">
             <img
-              src="/avatar.jpg"
+              src={assetPath("/avatar.jpg")}
               alt="Kard"
               className="w-full h-full object-cover"
             />

@@ -5,6 +5,7 @@ import { ProjectLinks } from "@/components/projects/project-links";
 import { getProjectBySlug, getProjects } from "@/lib/db/projects";
 import { generateSiteMetadata } from "@/lib/utils/metadata";
 import { formatDate } from "@/lib/utils/formatters";
+import { assetPath } from "@/lib/utils/asset-path";
 import type { Metadata } from "next";
 
 interface Props {
@@ -58,7 +59,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           <div className="aspect-video bg-surface rounded-lg border border-border flex items-center justify-center mb-8 overflow-hidden">
             {project.cover_image_url ? (
               <img
-                src={project.cover_image_url}
+                src={assetPath(project.cover_image_url)}
                 alt={project.title}
                 className="w-full h-full object-cover"
               />
