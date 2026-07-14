@@ -1,5 +1,14 @@
 import { NextResponse } from "next/server";
-import { updateSiteSettings } from "@/lib/storage/site-settings";
+import { getSiteSettings, updateSiteSettings } from "@/lib/storage/site-settings";
+
+export async function GET() {
+  try {
+    const settings = getSiteSettings();
+    return NextResponse.json(settings);
+  } catch (e) {
+    return NextResponse.json({ current_project: null }, { status: 200 });
+  }
+}
 
 export async function POST(request: Request) {
   try {

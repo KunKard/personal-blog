@@ -12,7 +12,7 @@ const adminLinks = [
   { label: "作品管理", href: "/admin/projects", icon: "🎮" },
   { label: "时间轴", href: "/admin/timeline", icon: "⏳" },
   { label: "媒体库", href: "/admin/media", icon: "🖼️" },
-  { label: "站点设置", href: "/admin/settings", icon: "⚙️" },
+  { label: "未来项目", href: "/admin/settings", icon: "🔧" },
 ];
 
 export function AdminSidebar() {

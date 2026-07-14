@@ -49,9 +49,13 @@ export function PostCard({ post }: PostCardProps) {
           {post.excerpt && (
             <p className="text-sm text-muted line-clamp-2 mb-3">{post.excerpt}</p>
           )}
-          <div className="flex flex-wrap gap-1.5">
-            <Badge variant="primary">{post.category}</Badge>
-          </div>
+          {post.tags && post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {post.tags.slice(0, 3).map((tag) => (
+                <Badge key={tag} variant="primary">{tag}</Badge>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
     </Link>

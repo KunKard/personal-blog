@@ -1,17 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 export default function AdminSettingsPage() {
   const [saved, setSaved] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [settings, setSettings] = useState({
     site_name: "Kworld",
-    current_project_title: "新项目开发中",
-    current_project_description: "一个全新的独立游戏正在酝酿中...\n敬请期待！",
-    current_project_tags: "Unity 6, URP, 2D",
+    current_project_title: "",
+    current_project_description: "",
+    current_project_tags: "",
     current_project_icon: "🔧",
   });
+
+  // Load existing settings on mount
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.current_project) {
+          setSettings({
+            site_name: "Kworld",
+            current_project_title: data.current_project.title || "",
+            current_project_description: data.current_project.description || "",
+            current_project_tags: (data.current_project.tags || []).join(", "),
+            current_project_icon: data.current_project.icon || "🔧",
+          });
+        }
+        setLoaded(true);
+      })
+      .catch(() => setLoaded(true));
+  }, []);
 
   function handleSave() {
     fetch("/api/settings", {
@@ -27,32 +47,19 @@ export default function AdminSettingsPage() {
       }),
     }).catch(() => {
       // API may not be available in static export mode
-      // In development, the API route handles saving
     });
 
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   }
 
+  if (!loaded) return <div className="text-muted">加载中...</div>;
+
   return (
     <div className="max-w-2xl">
-      <h1 className="text-2xl font-bold mb-8">站点设置</h1>
+      <h1 className="text-2xl font-bold mb-8">未来项目</h1>
 
       <div className="space-y-8">
-        {/* General */}
-        <fieldset className="space-y-4">
-          <legend className="text-sm font-bold text-muted uppercase tracking-wide">基本</legend>
-          <div>
-            <label className="block text-sm mb-1">网站名称</label>
-            <input
-              type="text"
-              value={settings.site_name}
-              onChange={(e) => setSettings({ ...settings, site_name: e.target.value })}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-primary"
-            />
-          </div>
-        </fieldset>
-
         {/* Current Project (首页「正在开发」) */}
         <fieldset className="space-y-4">
           <legend className="text-sm font-bold text-muted uppercase tracking-wide">
