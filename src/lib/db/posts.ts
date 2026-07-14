@@ -26,7 +26,7 @@ export async function getPublishedPosts(): Promise<Post[]> {
   if (!isSupabaseConfigured()) {
     const posts = await localStore.findMany<Post>("posts", {
       eq: { status: "published", visibility: "public" },
-      order: { column: "published_at", ascending: false },
+      order: { column: "updated_at", ascending: false },
     });
     return posts;
   }
@@ -36,7 +36,7 @@ export async function getPublishedPosts(): Promise<Post[]> {
       .select("*")
       .eq("status", "published")
       .eq("visibility", "public")
-      .order("published_at", { ascending: false });
+      .order("updated_at", { ascending: false });
     if (error) throw error;
     return data;
   });
