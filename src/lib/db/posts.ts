@@ -25,7 +25,7 @@ async function serverQuery<T>(fn: (server: Awaited<ReturnType<typeof createServe
 export async function getPublishedPosts(): Promise<Post[]> {
   if (!isSupabaseConfigured()) {
     const posts = await localStore.findMany<Post>("posts", {
-      eq: { status: "published" },
+      eq: { status: "published", visibility: "public" },
       order: { column: "published_at", ascending: false },
     });
     return posts;
@@ -35,6 +35,7 @@ export async function getPublishedPosts(): Promise<Post[]> {
       .from("posts")
       .select("*")
       .eq("status", "published")
+      .eq("visibility", "public")
       .order("published_at", { ascending: false });
     if (error) throw error;
     return data;
@@ -43,7 +44,7 @@ export async function getPublishedPosts(): Promise<Post[]> {
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   if (!isSupabaseConfigured()) {
-    return localStore.findOne<Post>("posts", { eq: { slug, status: "published" } });
+    return localStore.findOne<Post>("posts", { eq: { slug, status: "published", visibility: "public" } });
   }
   return serverQuery(async (supabase) => {
     const { data, error } = await supabase
@@ -51,6 +52,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       .select("*")
       .eq("slug", slug)
       .eq("status", "published")
+      .eq("visibility", "public")
       .single();
     if (error) return null;
     return data;
@@ -60,7 +62,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 export async function getPostsByCategory(category: string): Promise<Post[]> {
   if (!isSupabaseConfigured()) {
     return localStore.findMany<Post>("posts", {
-      eq: { status: "published", category },
+      eq: { status: "published", visibility: "public", category },
       order: { column: "published_at", ascending: false },
     });
   }
@@ -69,6 +71,7 @@ export async function getPostsByCategory(category: string): Promise<Post[]> {
       .from("posts")
       .select("*")
       .eq("status", "published")
+      .eq("visibility", "public")
       .eq("category", category)
       .order("published_at", { ascending: false });
     if (error) throw error;

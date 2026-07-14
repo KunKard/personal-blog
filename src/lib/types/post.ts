@@ -1,4 +1,5 @@
 export type PostStatus = "draft" | "published";
+export type PostVisibility = "public" | "private";
 
 export interface Post {
   id: string;
@@ -10,6 +11,7 @@ export interface Post {
   category: string;
   tags: string[];
   status: PostStatus;
+  visibility: PostVisibility;
   reading_time: number | null;
   published_at: string | null;
   created_at: string;

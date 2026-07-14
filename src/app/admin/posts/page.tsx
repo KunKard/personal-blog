@@ -50,6 +50,7 @@ export default function AdminPostsPage() {
               <tr className="border-b border-border">
                 <th className="text-left p-4 font-medium text-muted">标题</th>
                 <th className="text-left p-4 font-medium text-muted">状态</th>
+                <th className="text-left p-4 font-medium text-muted">可见</th>
                 <th className="text-left p-4 font-medium text-muted">分类</th>
                 <th className="text-left p-4 font-medium text-muted">日期</th>
                 <th className="text-right p-4 font-medium text-muted">操作</th>
@@ -62,6 +63,11 @@ export default function AdminPostsPage() {
                   <td className="p-4">
                     <Badge variant={post.status === "published" ? "primary" : "default"}>
                       {post.status === "published" ? "已发布" : "草稿"}
+                    </Badge>
+                  </td>
+                  <td className="p-4">
+                    <Badge variant={post.visibility === "private" ? "default" : "primary"}>
+                      {post.visibility === "private" ? "🔒 私密" : "🌐 公开"}
                     </Badge>
                   </td>
                   <td className="p-4 text-muted">{post.category}</td>

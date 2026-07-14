@@ -28,6 +28,7 @@ export default function NewPostPage() {
     category: "devlog",
     tags: [],
     status: "draft",
+    visibility: "public",
     reading_time: null,
     published_at: null,
   });
@@ -129,7 +130,7 @@ export default function NewPostPage() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm text-muted mb-1">分类</label>
             <select
@@ -140,6 +141,17 @@ export default function NewPostPage() {
               {BLOG_CATEGORIES.filter((c) => c.value !== "all").map((c) => (
                 <option key={c.value} value={c.value}>{c.label}</option>
               ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm text-muted mb-1">可见性</label>
+            <select
+              value={form.visibility}
+              onChange={(e) => updateField("visibility", e.target.value as "public" | "private")}
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors"
+            >
+              <option value="public">🌐 公开</option>
+              <option value="private">🔒 私密</option>
             </select>
           </div>
           <div>
