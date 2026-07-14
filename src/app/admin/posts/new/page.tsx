@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import remarkBreaks from "remark-breaks";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BLOG_CATEGORIES } from "@/lib/utils/constants";
 import { slugify } from "@/lib/utils/formatters";
+import { preprocessMarkdown } from "@/lib/utils/markdown";
 import type { PostInsert } from "@/lib/types";
 
 // Dynamically import MDEditor to avoid SSR issues (it needs browser APIs)
@@ -181,12 +183,15 @@ export default function NewPostPage() {
           <label className="block text-sm text-muted mb-2">内容</label>
           <div data-color-mode="light">
             <MDEditor
-              value={form.content}
+              value={preprocessMarkdown(form.content)}
               onChange={(val) => updateField("content", val || "")}
               height={500}
               preview="live"
               visibleDragbar={true}
               hideToolbar={false}
+              previewOptions={{
+                remarkPlugins: [[remarkBreaks]],
+              }}
               textareaProps={{
                 placeholder: "在此编写文章内容...\n\n使用工具栏进行格式化：**加粗**、*斜体*、# 标题、代码块、列表等",
               }}

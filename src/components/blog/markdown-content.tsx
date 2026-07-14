@@ -3,21 +3,10 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
+import { preprocessMarkdown } from "@/lib/utils/markdown";
 
 interface MarkdownContentProps {
   content: string;
-}
-
-function preprocessMarkdown(raw: string): string {
-  return (
-    raw
-      // Fix list items: "-文字" → "- 文字" (add space after dash for markdown list syntax)
-      .replace(/^(-)([^\s\d\-*+])/gm, "$1 $2")
-      // Ensure blank line before headings for proper paragraph breaks
-      .replace(/\n(#{1,6}\s)/g, "\n\n$1")
-      // Normalize triple+ newlines to double
-      .replace(/\n{3,}/g, "\n\n")
-  );
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {

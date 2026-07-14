@@ -5,7 +5,9 @@ import { useRouter, useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import remarkBreaks from "remark-breaks";
 import { BLOG_CATEGORIES } from "@/lib/utils/constants";
+import { preprocessMarkdown } from "@/lib/utils/markdown";
 import type { Post, PostUpdate } from "@/lib/types";
 
 import "@uiw/react-md-editor/markdown-editor.css";
@@ -131,12 +133,15 @@ export default function EditPostPage() {
           <label className="block text-sm text-muted mb-2">内容</label>
           <div data-color-mode="light">
             <MDEditor
-              value={post.content || ""}
+              value={preprocessMarkdown(post.content || "")}
               onChange={(val) => updateField("content", val || "")}
               height={500}
               preview="live"
               visibleDragbar={true}
               hideToolbar={false}
+              previewOptions={{
+                remarkPlugins: [[remarkBreaks]],
+              }}
             />
           </div>
         </div>
