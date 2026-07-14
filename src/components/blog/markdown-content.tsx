@@ -2,9 +2,22 @@
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 
 interface MarkdownContentProps {
   content: string;
+}
+
+function preprocessMarkdown(raw: string): string {
+  return (
+    raw
+      // Fix list items: "-文字" → "- 文字" (add space after dash for markdown list syntax)
+      .replace(/^(-)([^\s\d\-*+])/gm, "$1 $2")
+      // Ensure blank line before headings for proper paragraph breaks
+      .replace(/\n(#{1,6}\s)/g, "\n\n$1")
+      // Normalize triple+ newlines to double
+      .replace(/\n{3,}/g, "\n\n")
+  );
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
@@ -15,7 +28,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
   return (
     <div className="markdown-body">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkBreaks]}
         components={{
           h1: ({ children, ...props }) => (
             <h1 className="text-2xl font-bold mt-8 mb-4" {...props}>{children}</h1>
@@ -96,7 +109,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
           ),
         }}
       >
-        {content}
+        {preprocessMarkdown(content)}
       </ReactMarkdown>
     </div>
   );
