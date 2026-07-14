@@ -10,5 +10,9 @@ export function preprocessMarkdown(raw: string): string {
       .replace(/\n(#{1,6}\s)/g, "\n\n$1")
       // Normalize triple+ newlines to double
       .replace(/\n{3,}/g, "\n\n")
+      // Escape angle brackets in generics like <GameObject> to prevent React from treating them as HTML tags
+      // Only escape when inside inline code, code blocks, or followed by an uppercase letter (C# generics pattern)
+      .replace(/<([A-Z][A-Za-z0-9_]*)>/g, "&lt;$1&gt;")
+      .replace(/<\/([A-Z][A-Za-z0-9_]*)>/g, "&lt;/$1&gt;")
   );
 }

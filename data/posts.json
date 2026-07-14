@@ -4,7 +4,7 @@
     "slug": "unity-assetbundles-base",
     "title": "AssetBundles基础",
     "excerpt": "2026.7.14学习AB包基础内容",
-    "content": "# Unity-AssetBundles基础\n简称AB包\n\n## 主包和依赖包\n- 主包：调用BuildPipeline.BuildAssetBundles构建时，Unity在输出目录生成的一个特殊的、**没有后缀的**小型AB包，文件名就是输出目录名\n- 依赖包：当一个AB包里的资源（如材质）引用了另一个AB包里的资源（如纹理）时，被引用的那个包就是依赖包\n\n## 同步加载和异步加载",
+    "content": "# Unity-AssetBundles基础\n简称AB包\n\n## 主包和依赖包\n- 主包：调用BuildPipeline.BuildAssetBundles构建时，Unity在输出目录生成的一个特殊的、**没有后缀的**小型AB包，文件名就是输出目录名\n- 依赖包：当一个AB包里的资源（如材质）引用了另一个AB包里的资源（如纹理）时，被引用的那个包就是依赖包\n\n## 同步加载和异步加载\n- 同步加载：调用加载API后，主线程立即进入阻塞状态\n- - 资源加载：AssetBundle.LoadAsset<GameObject>(\"MyPrefab\")，直接返回结果。",
     "cover_image_url": "",
     "category": "devlog",
     "tags": [
@@ -16,6 +16,6 @@
     "reading_time": null,
     "published_at": "2026-07-14T08:51:02.506Z",
     "created_at": "2026-07-14T08:51:02.537Z",
-    "updated_at": "2026-07-14T11:11:12.911Z"
+    "updated_at": "2026-07-14T13:40:13.064Z"
   }
 ]
