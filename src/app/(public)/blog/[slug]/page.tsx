@@ -57,8 +57,8 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <div className="pt-24 pb-16">
-      <Container>
-        <article className="max-w-7xl mx-auto">
+      <Container className="max-w-none px-0">
+        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <header className="mb-8">
             {post.cover_image_url && (
               <div className="aspect-video bg-surface rounded-lg border border-border overflow-hidden mb-6">
