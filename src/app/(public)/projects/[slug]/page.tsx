@@ -56,7 +56,7 @@ export default async function ProjectDetailPage({ params }: Props) {
       <Container>
         {/* Hero */}
         <div className="mb-12 max-w-3xl">
-          <div className="aspect-video bg-surface rounded-lg border border-border flex items-center justify-center mb-8 overflow-hidden">
+          <div className="aspect-video w-1/2 bg-surface rounded-lg border border-border flex items-center justify-center mb-8 overflow-hidden">
             {project.cover_image_url ? (
               <img
                 src={assetPath(project.cover_image_url)}
