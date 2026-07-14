@@ -15,7 +15,6 @@
   --tw-prose-pre-bg: rgba(255, 255, 255, 0.05);
   --tw-prose-th-borders: var(--border);
   --tw-prose-td-borders: var(--border);
-  max-width: 65ch;
   line-height: 1.8;
 }
 
