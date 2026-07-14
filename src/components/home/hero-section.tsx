@@ -18,7 +18,7 @@ export function HeroSection() {
         transition={{ duration: 0.6 }}
         className="mb-8"
       >
-        <div className="w-32 h-32 mx-auto rounded-full border-2 border-border bg-surface flex items-center justify-center text-5xl">
+        <div className="w-32 h-32 mx-auto rounded-full border-2 border-border bg-surface flex items-center justify-center text-5xl leading-none">
           🎮
         </div>
       </motion.div>

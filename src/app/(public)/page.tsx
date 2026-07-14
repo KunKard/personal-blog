@@ -35,7 +35,7 @@ export default async function HomePage() {
       <section className="py-24">
         <Container>
           <SectionHeading
-            title="游戏作品"
+            title="个人作品"
             subtitle="每一个作品都是一段旅程"
           />
           {featuredProjects.length > 0 ? (
@@ -68,7 +68,7 @@ export default async function HomePage() {
         <Container>
           <SectionHeading
             title="最新博客"
-            subtitle="分享游戏开发中的思考与经验"
+            subtitle="记录技术与创意的点滴"
           />
           {recentPosts.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -93,7 +93,7 @@ export default async function HomePage() {
               <p className="text-4xl mb-4">📝</p>
               <p className="text-muted mb-4">博客文章即将上线...</p>
               <p className="text-sm text-muted">
-                我会在这里分享游戏开发的技术心得和创作故事
+                我会在这里分享技术心得和创作故事
               </p>
             </div>
           )}

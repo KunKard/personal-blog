@@ -55,8 +55,8 @@ export default async function ProjectDetailPage({ params }: Props) {
     <div className="pt-24 pb-16">
       <Container>
         {/* Hero */}
-        <div className="mb-12">
-          <div className="aspect-video max-w-2xl mx-auto bg-surface rounded-lg border border-border flex items-center justify-center mb-8 overflow-hidden">
+        <div className="mb-12 max-w-3xl">
+          <div className="aspect-video bg-surface rounded-lg border border-border flex items-center justify-center mb-8 overflow-hidden">
             {project.cover_image_url ? (
               <img
                 src={assetPath(project.cover_image_url)}
@@ -69,17 +69,15 @@ export default async function ProjectDetailPage({ params }: Props) {
             )}
           </div>
 
-          <div className="max-w-3xl">
-            <div className="flex flex-wrap gap-2 mb-3">
-              {project.tags.map((tag) => (
-                <Badge key={tag} variant="primary">{tag}</Badge>
-              ))}
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-3">{project.title}</h1>
-            {project.tagline && (
-              <p className="text-lg text-muted">{project.tagline}</p>
-            )}
+          <div className="flex flex-wrap gap-2 mb-3">
+            {project.tags.map((tag) => (
+              <Badge key={tag} variant="primary">{tag}</Badge>
+            ))}
           </div>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3">{project.title}</h1>
+          {project.tagline && (
+            <p className="text-lg text-muted">{project.tagline}</p>
+          )}
         </div>
 
         {/* Steam-style layout */}

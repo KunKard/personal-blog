@@ -11,7 +11,6 @@ export const metadata = generateSiteMetadata({
 const links = [
   { label: "GitHub", href: "https://github.com/KunKard" },
   { label: "Email", href: "mailto:kunkard@foxmail.com" },
-  { label: "Bilibili", href: "https://space.bilibili.com/471089291" },
 ];
 
 export default function AboutPage() {

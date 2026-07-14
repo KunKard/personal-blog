@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,20 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // GitHub Pages has no server — redirect to home
+  useEffect(() => {
+    const check = async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        if (!res.ok) throw new Error("no server");
+      } catch {
+        router.replace("/");
+      }
+    };
+    check();
+  }, [router]);
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
