@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import remarkBreaks from "remark-breaks";
@@ -33,27 +33,39 @@ export default function NewPostPage() {
     published_at: null,
   });
   const [tagInput, setTagInput] = useState("");
+  const slugEdited = useRef(false);
 
   function updateField<K extends keyof PostInsert>(key: K, value: PostInsert[K]) {
     setForm((prev) => {
       const next = { ...prev, [key]: value };
-      if (key === "title" && !prev.slug) {
+      if (key === "title" && !slugEdited.current) {
         next.slug = slugify(value as string);
       }
       return next;
     });
   }
 
+  function handleSlugChange(value: string) {
+    slugEdited.current = true;
+    setForm((prev) => ({ ...prev, slug: value }));
+  }
+
   function addTag() {
     const tag = tagInput.trim();
     if (tag && !form.tags.includes(tag)) {
-      setForm((prev) => ({ ...prev, tags: [...prev.tags, tag] }));
+      setForm((prev) => ({
+        ...prev,
+        tags: [...prev.tags, tag].sort((a, b) => a.localeCompare(b)),
+      }));
       setTagInput("");
     }
   }
 
   function removeTag(tag: string) {
-    setForm((prev) => ({ ...prev, tags: prev.tags.filter((t) => t !== tag) }));
+    setForm((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((t) => t !== tag),
+    }));
   }
 
   async function handleSubmit(e: React.FormEvent, status: PostInsert["status"]) {
@@ -65,18 +77,8 @@ export default function NewPostPage() {
       return;
     }
 
-    // Auto-generate slug from title if empty
-    const slug = form.slug || slugify(form.title);
-    if (!slug) {
-      alert("无法生成 URL slug，请手动输入");
-      return;
-    }
-
     setSaving(true);
-    const body = { ...form, slug, status };
-    if (status === "published" && !form.published_at) {
-      body.published_at = new Date().toISOString();
-    }
+    const body = { ...form, status };
 
     const res = await fetch("/api/posts", {
       method: "POST",
@@ -93,30 +95,31 @@ export default function NewPostPage() {
   }
 
   return (
-    <div className="max-w-5xl">
+    <div className="max-w-3xl">
       <h1 className="text-2xl font-bold mb-8">新建文章</h1>
 
       <form className="space-y-6">
-        <div>
-          <label className="block text-sm text-muted mb-1">标题</label>
-          <input
-            type="text"
-            value={form.title}
-            onChange={(e) => updateField("title", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors"
-            placeholder="文章标题"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm text-muted mb-1">Slug</label>
-          <input
-            type="text"
-            value={form.slug}
-            onChange={(e) => updateField("slug", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors"
-            placeholder="url-friendly-slug"
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-muted mb-1">标题</label>
+            <input
+              type="text"
+              value={form.title}
+              onChange={(e) => updateField("title", e.target.value)}
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors"
+              placeholder="文章标题"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-muted mb-1">Slug</label>
+            <input
+              type="text"
+              value={form.slug}
+              onChange={(e) => handleSlugChange(e.target.value)}
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:border-foreground/30 transition-colors"
+              placeholder="url-friendly-slug"
+            />
+          </div>
         </div>
 
         <div>
@@ -166,9 +169,10 @@ export default function NewPostPage() {
           </div>
         </div>
 
+        {/* Tags */}
         <div>
           <label className="block text-sm text-muted mb-1">标签</label>
-          <div className="flex gap-2 mb-2">
+          <div className="flex gap-2 mb-2 flex-wrap">
             {form.tags.map((tag) => (
               <Badge key={tag} variant="primary" className="cursor-pointer" onClick={() => removeTag(tag)}>
                 {tag} ×

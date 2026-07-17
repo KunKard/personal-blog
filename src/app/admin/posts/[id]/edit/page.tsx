@@ -30,7 +30,7 @@ export default function EditPostPage() {
       .then((res) => res.json())
       .then((data: Post) => {
         setForm(data);
-        setTags(data.tags || []);
+        setTags((data.tags || []).sort((a, b) => a.localeCompare(b)));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -43,7 +43,7 @@ export default function EditPostPage() {
   function addTag() {
     const tag = tagInput.trim();
     if (tag && !tags.includes(tag)) {
-      setTags((prev) => [...prev, tag]);
+      setTags((prev) => [...prev, tag].sort((a, b) => a.localeCompare(b)));
       setTagInput("");
     }
   }
