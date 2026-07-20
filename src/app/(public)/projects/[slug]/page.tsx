@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
+import { MarkdownContent } from "@/components/blog/markdown-content";
 import { ProjectLinks } from "@/components/projects/project-links";
 import { getProjectBySlug, getProjects } from "@/lib/db/projects";
 import { generateSiteMetadata } from "@/lib/utils/metadata";
@@ -88,8 +89,8 @@ export default async function ProjectDetailPage({ params }: Props) {
             {project.description && (
               <section>
                 <h2 className="text-xl font-bold mb-3">关于此游戏</h2>
-                <div className="prose text-muted leading-relaxed whitespace-pre-wrap">
-                  {project.description}
+                <div className="prose max-w-none">
+                  <MarkdownContent content={project.description} />
                 </div>
               </section>
             )}
