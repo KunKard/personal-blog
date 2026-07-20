@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run dev:restore && next dev",
+    "dev": "node scripts/clean-dev.mjs && npm run dev:restore && next dev",
     "dev:restore": "node scripts/restore-api.mjs",
     "prebuild": "npm run dev:remove-api && npx velite",
     "build": "cross-env NEXT_STATIC_EXPORT=true next build",
