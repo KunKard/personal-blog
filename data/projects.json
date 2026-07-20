@@ -45,7 +45,7 @@
     "slug": "monument-valley-remake",
     "title": "纪念碑谷复刻",
     "tagline": "复刻纪念碑谷核心玩法，BFS寻路 + 视错觉旋转机制",
-    "description": "",
+    "description": "基于 Mix and Jam YouTube 教程（第17期：Monument Valley's Level Design）复刻纪念碑谷核心玩法。\n\n实现功能：\n- **BFS 寻路**：点击方块角色自动沿路径移动\n- **视错觉旋转**：平台旋转时动态开关路径，创造视觉欺骗效果\n- **关卡系统**：包含两个自定义关卡（单层旋转 + 多层换层）\n\n参考教程：https://www.youtube.com/watch?v=5o8yO1M3o3c\nGitHub 仓库：https://github.com/KunKard/MonumentValley-Remake",
     "cover_image_url": "/images/monument-valley-cover.jpg",
     "screenshots": [],
     "video_url": null,
@@ -65,14 +65,14 @@
       "URP"
     ],
     "status": "published",
-    "dev_duration": "进行中",
+    "dev_duration": "2 天",
     "team_size": 1,
-    "my_role": "独立开发者",
+    "my_role": "开发者",
     "postmortem": null,
     "github_url": "https://github.com/KunKard/MonumentValley-Remake",
     "featured": true,
     "sort_order": 9,
-    "created_at": "2026-07-20T00:00:00.000Z",
+    "created_at": "2026-05-03T00:00:00.000Z",
     "updated_at": "2026-07-20T00:00:00.000Z"
   }
 ]
