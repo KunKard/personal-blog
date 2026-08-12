@@ -1,5 +1,39 @@
 [
   {
+    "id": "project-gi-bag",
+    "slug": "genshin-impact-bag",
+    "title": "原神背包系统复刻",
+    "tagline": "复刻原神抽卡 + 背包管理，虚拟列表滚动 + JSON 存档",
+    "description": "复刻原神「抽卡 → 入包 → 查看」的核心交互：从卡池抽取物品，在网格背包中管理与查看详情。\n\n**核心功能：**\n- 🎴 **抽卡系统**：单抽 / 十连抽，从 ScriptableObject 卡池（CardPoolData）随机抽取物品加入背包\n- 🎒 **背包系统**：6 列网格布局，点击物品查看图标、名称与详情；容量 10000\n- ⚡ **虚拟列表（对象池）**：XScrollView 只实例化「可见行数 × 列数」个 Item UI，滚动时复用并动态刷新，上万物品也能流畅滚动\n- 💾 **JSON 存档**：StorageManager 将背包写入 persistentDataPath/bagItems.json，启动自动加载\n- 🏗️ **管理器架构**：BaseManager 泛型单例（UIManager / BagManager / StorageManager），面板切换与数据层解耦\n- 🛠️ **编辑器工具**：Tools 菜单一键清空背包存档、打开存档目录，方便测试\n\n**📐 实现亮点：**\n- 虚拟列表替代全量实例化，配合「首行缓存 + 滚动增量刷新」避免重复布局\n- 物品 UI 通过回调（OnItemClicked）与面板解耦，点击事件不硬编码\n- 排序逻辑（SortBag）在增删与读档时统一调用，保证列表一致性",
+    "cover_image_url": "/images/genshin-bag-cover.png",
+    "screenshots": [],
+    "video_url": null,
+    "webgl_game_slug": null,
+    "download_links": [],
+    "tech_stack": [
+      "Unity",
+      "C#",
+      "UGUI"
+    ],
+    "category": "remake",
+    "tags": [
+      "Unity",
+      "原神",
+      "背包系统",
+      "UI"
+    ],
+    "status": "published",
+    "dev_duration": null,
+    "team_size": 1,
+    "my_role": "开发者",
+    "postmortem": null,
+    "github_url": null,
+    "featured": true,
+    "sort_order": 8,
+    "created_at": "2026-08-12T00:00:00.000Z",
+    "updated_at": "2026-08-12T16:10:00.000Z"
+  },
+  {
     "id": "project-dctb",
     "slug": "dont-catch-that-bird",
     "title": "2026金海豚GameJam - Don't Catch That Bird",
@@ -45,7 +79,7 @@
     "slug": "monument-valley-remake",
     "title": "纪念碑谷复刻",
     "tagline": "复刻纪念碑谷核心玩法，BFS寻路 + 视错觉旋转机制",
-    "description": "基于 Mix and Jam 教程复刻纪念碑谷核心玩法，并在其基础上进行重构与改进。\n\n**核心玩法：**\n- **BFS 寻路**：广度优先搜索算法，点击方块角色自动沿最短路径移动\n- **视错觉旋转**：平台旋转时动态开关路径，创造视线欺骗效果\n- **关卡系统**：两个自定义关卡（单层 X 轴旋转 + 多层 Y 轴旋转换层）\n\n**🔧 相比教程的改进：**\n- **代码重构**：将重复的 ChangeCondition 和 MyCondition 提取为公共 ConditionManager，消除两个 GameMgr 间的重复代码\n- **事件驱动动画**：MyPlayAni 从每帧 Update 轮询改为订阅 OnWalkingChanged 事件，减少无用开销\n- **Bug 修复**：修复空列表崩溃（nextCubes.First 判空）、恢复旋转中禁止点击的安全检查、修复 Gizmo 空指针\n- **工程清理**：删除原始 SampleScene 及对应脚本，只保留自定义关卡。配置 .gitignore 排除 Temp/UserSettings\n- **版本管理**：Git 初始化 + GitHub 仓库托管，支持迭代开发\n\n参考教程：\n- https://www.youtube.com/watch?v=hetaWVfaLQc&ab_channel=MixandJam\n- https://github.com/mixandjam/MonumentValley-LevelDesign",
+    "description": "基于 Mix and Jam 教程复刻纪念碑谷核心玩法，并在其基础上进行重构与改进。\n\n**核心玩法：**\n- **BFS 寻路**：广度优先搜索算法，点击方块角色自动沿最短路径移动\n- **视错觉旋转**：平台旋转时动态开关路径，创造视线欺骗效果\n- **关卡系统**：两个自定义关卡（单层 X 轴旋转 + 多层 Y 轴旋转换层）\n\n**🔧 相比教程的改进：**\n- **事件驱动动画**：MyPlayAni 从每帧 Update 轮询改为订阅 OnWalkingChanged 事件，减少无用开销\n- **Bug 修复**：修复空列表崩溃（nextCubes.First 判空）、恢复旋转中禁止点击的安全检查、修复 Gizmo 空指针\n- **版本管理**：Git 初始化 + GitHub 仓库托管，支持迭代开发\n\n参考教程：\n- https://www.youtube.com/watch?v=hetaWVfaLQc&ab_channel=MixandJam\n- https://github.com/mixandjam/MonumentValley-LevelDesign",
     "cover_image_url": "/images/monument-valley-cover.jpg",
     "screenshots": [],
     "video_url": null,
@@ -56,7 +90,7 @@
       "C#",
       "DOTween"
     ],
-    "category": "demo",
+    "category": "remake",
     "tags": [
       "Unity",
       "纪念碑谷",
@@ -71,6 +105,6 @@
     "featured": true,
     "sort_order": 9,
     "created_at": "2026-05-03T00:00:00.000Z",
-    "updated_at": "2026-07-20T09:05:50.502Z"
+    "updated_at": "2026-07-20T11:38:54.166Z"
   }
 ]

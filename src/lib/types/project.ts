@@ -1,4 +1,4 @@
-export type ProjectCategory = "game" | "jam" | "tool" | "demo" | "other";
+export type ProjectCategory = "game" | "jam" | "tool" | "demo" | "remake" | "other";
 export type ProjectStatus = "draft" | "published" | "archived";
 
 export interface Project {

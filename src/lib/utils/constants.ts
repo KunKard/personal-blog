@@ -20,6 +20,7 @@ export const PROJECT_CATEGORIES = [
   { value: "jam", label: "Game Jam" },
   { value: "tool", label: "工具" },
   { value: "demo", label: "Demo" },
+  { value: "remake", label: "复刻" },
   { value: "other", label: "其他" },
 ] as const;
 
