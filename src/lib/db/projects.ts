@@ -18,10 +18,16 @@ async function adminQuery<T>(fn: (admin: ReturnType<typeof createAdminClient>) =
 
 export async function getProjects(): Promise<Project[]> {
   if (!isSupabaseConfigured()) {
-    return localStore.findMany<Project>("projects", {
+    const projects = await localStore.findMany<Project>("projects", {
       eq: { status: "published" },
-      order: { column: "created_at", ascending: false },
     });
+    // Sort in JS so the local JSON store ranks identically to the Supabase query
+    // below: sort_order first, then created_at as the tiebreaker.
+    return projects.sort(
+      (a, b) =>
+        (b.sort_order ?? 0) - (a.sort_order ?? 0) ||
+        String(b.created_at ?? "").localeCompare(String(a.created_at ?? ""))
+    );
   }
   return serverQuery(async (supabase) => {
     const { data, error } = await supabase
