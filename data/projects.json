@@ -106,5 +106,41 @@
     "sort_order": 9,
     "created_at": "2026-05-03T00:00:00.000Z",
     "updated_at": "2026-07-20T11:38:54.166Z"
+  },
+  {
+    "id": "project-star-rail-chat-system",
+    "slug": "star-rail-chat-system",
+    "title": "星穹铁道聊天系统复刻",
+    "tagline": "复刻星铁手机聊天系统，对话引擎 + 节点编辑器 + 400+ 条测试",
+    "description": "复刻《崩坏：星穹铁道》里的手机聊天系统：一套配置驱动的对话引擎，加上可视化配内容的策划工具链。对话内容取自真实聊天记录的摘录与改写。\n\n**核心功能：**\n- 💬 **聊天界面**：9 个联系人、334 个对话节点；气泡宽度按文本自适应，支持 Emoji 与文字混排、表情包消息\n- ⌨️ **消息节奏**：每个节点自带延迟，「对方正在输入…」在窗口顶部签名与列表三点气泡两处联动；多会话并行推进，不在当前会话的联系人也照常收消息、攒未读\n- 🔴 **未读红点**：带脉冲动画，切换会话即清除\n- ⏱️ **时间分割线**：相邻两条带时间的消息间隔超过 5 分钟才插线，由运行时策略判定，策划只写时间戳\n- 🎯 **选择节点**：选项数 1~3 个均需布局正常；选项文案直接成为玩家消息，不补重复气泡\n- 💾 **存档**：退出 Play 落盘，重进恢复历史、当前节点、未读数与时间基线；原子写 + .bak 备份 + 损坏隔离\n- 🛠️ **对话编辑器**：自定义 Inspector，节点增删 / 拖拽排序 / 搜索、内联校验、从任意节点试跑预览\n- ✅ **校验器**：断链、从入口不可达、时间配置错误、选项数越界\n\n**📐 实现亮点：**\n- **五层程序集分层**：Data / Runtime / View / Editor / Tests 依赖单向无环。把「一个选择节点最多几个选项」这类格式事实放进 Data，校验器就不必引用 View —— 否则 UnityEngine.UI 会被拖进离线测试。分层是为了让「什么能在 Unity 之外验」这条线画得出来，最后有 411 条断言跑在独立的离线工程里\n- **存档层字符串进、字符串出**：若签名是 Write(SaveFileData)，它就需要一个序列化器，而工程里唯一的序列化器是 JsonUtility —— 于是只能靠给测试桩补一个假的来「验」，那验的是赝品。改成字符串进出后，离线测试用任意字符串就能验原子写、备份与损坏隔离\n- **读写行为故意不对称，并用断言守住这个 API 选择**：写只用两参重载（不写 BOM），读走 ReadAllText（会剥 BOM）。后人若为了「统一」改成 ReadAllBytes + Encoding.UTF8.GetString，BOM 会留在字符串里让解析失败 —— 断言守的是这个选择本身，不是某一行\n- **分割线不由策划手配**：策划只在节点上写 timeLabel 与 timeValueUtc（缺一不可：文案比不了大小，数值表达不了「昨天」），插不插线由运行时策略按阈值判定。校验器与运行时共用同一个常量 —— 抄一份必然漂移，而漂移的校验器比没有校验器更糟，策划会停止相信它\n- **虚拟化的下标逻辑抽成纯函数**：MessageWindow 不引用 UnityEngine，于是「滚到某处少一条」这类不报错、难复现的差一位错误，能在 Unity 之外跑断言\n- **对象池可当场验收**：NPC 15 / 玩家 6 / 分割线 8，预热 29 个；游戏里按 F2 直接读 Instantiate 累计次数，实测停在 30 不再增长",
+    "cover_image_url": "/images/placeholder-cover.png",
+    "screenshots": [],
+    "video_url": null,
+    "webgl_game_slug": null,
+    "download_links": [],
+    "tech_stack": [
+      "Unity",
+      "C#",
+      "UGUI",
+      "TextMeshPro"
+    ],
+    "category": "remake",
+    "tags": [
+      "Unity",
+      "星穹铁道",
+      "聊天系统",
+      "对话编辑器",
+      "UI"
+    ],
+    "status": "published",
+    "dev_duration": "11 天",
+    "team_size": 1,
+    "my_role": "开发者",
+    "postmortem": null,
+    "github_url": "https://github.com/KunKard/ChatSystem",
+    "featured": false,
+    "sort_order": 11,
+    "created_at": "2026-09-28T15:40:03.088Z",
+    "updated_at": "2026-09-28T15:40:03.088Z"
   }
 ]
